@@ -4,6 +4,14 @@ session_start();
 if(!isset($_SESSION['userId'])){
 	header('Location:login.php');
 }
+
+$av = $_SESSION["access"];
+
+//Check user authorization for imac
+if($av != 1 && $av != 12){
+  header('Location:codestrike.php');
+  $_SESSION['unauthorized'] = "Not Authorized for Imac";
+}
 ?>
 <div id="interface">
 	<button title="allStudents" onclick="loadContent(this.title)">Student Detail</button>
@@ -16,6 +24,11 @@ if(!isset($_SESSION['userId'])){
 </div>
 <div id="content">
 	<div id="content_table">
+		 <?php 
+		    if(isset($_SESSION['unauthorized'])){
+		    echo $_SESSION['unauthorized'];
+		  }
+ 		?>
 		<p >Welcome to CodeStrike's Dashboard.</p>	
 		<p id="intro">This Tab is dedicated to <b>iMac Lab</b> of Atharva college of Engineering. All the lab related tasks, which involve the <b>student data interaction</b> can be managed from this particular Dashboard.
 			<br>
