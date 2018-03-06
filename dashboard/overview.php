@@ -1,5 +1,25 @@
+<?php
+// Start the session
+session_start();
+if(!isset($_SESSION['username'])){
+  header('Location:login.php');
+}
+
+$av = $_SESSION["access"];
+//validatiing access for codestrike
+if($av != 1 && $av != 12){
+  header('Location:events.php');
+  $_SESSION['unauthorized'] = "Not Authorized for Imac";
+}
+?>
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <div id="overview_chart">
+	<?php 
+	   if(isset($_SESSION['unauthorized'])){
+	    echo $_SESSION['unauthorized'];
+	  }
+ 	?>
 	Main chart goes here
 </div>
 <div id="piechart" ></div>
