@@ -4,6 +4,15 @@ session_start();
 if(!isset($_SESSION['userId'])){
 	header('Location:login.php');
 }
+
+$av = $_SESSION["access"];
+
+//Check user authorization for codestrike
+if($av != 2 && $av != 12){
+  header('Location:overview.php');
+  $_SESSION['unauthorized'] = "Not Authorized for Codestrike";
+}
+
 ?>
 <div id="interface">
 	<button title="jsWorkshop" onclick="loadContent(this.title)">JavaScript Workshop</button>
@@ -11,6 +20,11 @@ if(!isset($_SESSION['userId'])){
 </div>
 <div id="content">
 	<div id="content_table">
+		<?php 
+		   if(isset($_SESSION['unauthorized'])){
+		    echo $_SESSION['unauthorized'];
+		  }
+		?>
 		<p >Welcome to CodeStrike's Dashboard.</p>	
 		<p id="intro">This Tab is dedicated to <b>CodeStrike</b> of Atharva college of Engineering. All the lab related tasks, which involve the <b>student data interaction</b> can be managed from this particular Dashboard.
 			<br>
